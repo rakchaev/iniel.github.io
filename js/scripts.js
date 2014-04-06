@@ -269,7 +269,7 @@ $(function() {
 
     var score,
         gameStep,
-        totalSteps = 2;
+        totalSteps = 20;
 
     var testBlock = $('.b-test');
     var counterBlock = $('.b-header__counter');
