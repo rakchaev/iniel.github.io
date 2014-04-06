@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="keywords" content="Typography, font, game, typeface, design, fun" />
+	<meta name="description" content="Fun with fonts. This game for designers and people who interested in typography." />
+	<meta name="author" content="Kolosova Svetlana" />
+	<title>Fun with fonts</title>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<script src="js/underscore-min.js"></script>
+	<script src="js/scripts.js"></script>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="stylesheets/screen.css">
+</head>
+<body class="b-page">
+	<div style="display: none">
+		<script type="text/template" id="js-tmpl-start">
+			<div class="b-task b-task_intro">Test</div>
+			<div class="js-game-start-button b-typeface_intro">
+				<img src="images/fonts/sofia.png" />
+				<div class="b-line_horizontal_higher"></div>
+				<div class="b-line_horizontal_top"></div>
+				<div class="b-line_horizontal_buttom"></div>
+				<div class="b-line_vertical_one"></div>
+				<div class="b-line_vertical_two"></div>
+				<div class="b-line_vertical_three"></div>
+				<div class="b-line_vertical_four"></div>
+			</div>
+			<div class="b-instructions">
+				<div class="b-instructions__title">Instructions</div>
+				<div class="b-instructions__text">
+					<p>This project was created for designers and people who interested in typography.</p>
+					<p>Your mission is simple: to guess which of the four fonts typed the word.</p>
+					<p>I hope you enjoy it =)</p>
+				</div>
+			</div>
+			<div>
+				<div class="b-button js-game-start-button">Start</div>
+			</div>
+		</script>
+		<script type="text/template" id="js-tmpl-question">
+			<div class="js-question" data-answer="<%= answer.name %>">
+				<div class="b-task">Which font is this one here?</div>
+				<div class="b-typeface">
+					<img src="images/fonts/<%= answer.image %>" />
+					<div class="b-line_horizontal" style="top: <%= answer.higherLine + 1 %>px"></div>
+					<div class="b-line_horizontal" style="top: <%= answer.topLine %>px"></div>
+					<div class="b-line_horizontal" style="top: <%= answer.buttomLine - 21 %>px"></div>
+					<div class="b-line_vertical" style="left: <%= answer.leftLine %>px"></div>
+					<div class="b-line_vertical" style="left: <%= answer.rightLine -8%>px"></div>
+				</div>
+			</div>
+			<div class="b-options">
+				<div class="b-options__item js-option1" data-value="<%= option1 %>"><%= option1 %></div>
+				<div class="b-options__item js-option2" data-value="<%= option2 %>"><%= option2 %></div>
+				<div class="b-options__item js-option3" data-value="<%= option3 %>"><%= option3 %></div>
+				<div class="b-options__item js-option4" data-value="<%= option4 %>"><%= option4 %></div>
+			</div>
+			<div class="b-score">Score: <%= score %></div>
+		</script>
+		<script type="text/template" id="js-tmpl-answer">
+			<div class="b-task">Your answer is incorrect</div>
+			<div class="b-type-compare">
+				<div class="b-type-compare__answer">
+					<div class="b-typeface">
+						<img src="images/fonts/<%= answer.image %>" />
+						<div class="b-line_horizontal" style="top: <%= answer.higherLine + 1 %>px"></div>
+						<div class="b-line_horizontal" style="top: <%= answer.topLine %>px"></div>
+						<div class="b-line_horizontal" style="top: <%= answer.buttomLine - 21 %>px"></div>
+						<div class="b-line_vertical" style="left: <%= answer.leftLine %>px"></div>
+						<div class="b-line_vertical" style="left: <%= answer.rightLine - 8%>px"></div>
+					</div>
+					<table class="b-typeface__info">
+						<tr>
+							<td>Typeface </td>
+							<td><a href="<%= answer.link %>" target="_blank"><%= answer.name %></a></td>
+						</tr>
+						<tr>
+							<td>Designer</td>
+							<td><a href="https://www.google.ru/#q=<%= answer.designer %>"><%= answer.designer %></a></td>
+						</tr>
+						<tr>
+							<td>Released</td>
+							<td><%= answer.released %></td>
+						</tr>
+					</table>
+				</div>
+				<div class="b-type-compare__answer_wrong">
+					<div class="b-typeface_wrong">
+						<img src="images/fonts/<%= choice.image %>" />
+						<div class="b-typeface_wrong__push">
+							<div class="b-line_horizontal b-line_horizontal_hide" style="top: <%= answer.higherLine + 1 %>px"></div>
+							<div class="b-line_horizontal b-line_horizontal_hide" style="top: <%= answer.topLine %>px"></div>
+							<div class="b-line_horizontal b-line_horizontal_hide" style="top: <%= answer.buttomLine - 21 %>px"></div>
+							<div class="b-line_vertical" style="left: <%= answer.leftLine %>px"></div>
+							<div class="b-line_vertical" style="left: <%= answer.rightLine %>px"></div>
+						</div>
+					</div>
+					<table class="b-typeface__info">
+						<tr>
+							<td>Typeface </td>
+							<td><a href="<%= choice.link %>" target="_blank"><%= choice.name %></a></td>
+						</tr>
+						<tr>
+							<td>Designer</td>
+							<td><a href="https://www.google.ru/#q=<%= choice.designer %>"><%= choice.designer %></a></td>
+						</tr>
+						<tr>
+							<td>Released</td>
+							<td><%= choice.released %></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="b-score">Score: <%= score %></div>
+			<div class="b-button js-game-next">Next</div>
+		</script>
+		<script type="text/template" id="js-tmpl-counter">FONT <span class="b-header__counter_blue"><%= step %> of <%= total %></span>
+		</script>
+	</div>
+	<div class="b-hotkeys">
+		<div class="b-hotkeys__item"><span class="b-hotkeys__item__icon">ENTER</span> &mdash; Start / Next</div>
+		<div class="b-hotkeys__item"><span class="b-hotkeys__item__icon">1</span> &mdash; Option 1</div>
+		<div class="b-hotkeys__item"><span class="b-hotkeys__item__icon">2</span> &mdash; Option 2</div>
+		<div class="b-hotkeys__item"><span class="b-hotkeys__item__icon">3</span> &mdash; Option 3</div>
+		<div class="b-hotkeys__item"><span class="b-hotkeys__item__icon">4</span> &mdash; Option 4</div>
+	</div>
+	<div class="b-overlay js-show"></div>
+	<div class="b-final js-show">
+		<div class="b-final__title">Your score</div>
+		<div class="b-final__score"></div>
+		<div class="b-final__out-of">out of <span class="b-final__total"></span></div>
+		<div class="b-tweet-button js-game-tweet-score">Tweet your score</div>
+		<div class="b-retry-button js-game-restart-button">or try again</div>
+		<div class="b-final__thanks">Thanks for playing this game. I hope you enjoyed Fun with fonts! You can also support me by liking on Facebook or follow me on Twitter, thanks in advance!</div>
+	</div>
+	<div class="b-page__wrapper">
+		<header class="b-header">
+			<div class="b-header__game-title">FUNFONTS <span class="b-header__game-title_blue">a font game<span></div>
+			<div class="b-header__counter"></div>
+			<div class="b-header__hotkeys-button">
+				<a href="#" class="js-game-hotkeys">Hotkeys</a>
+			</div>
+		</header>
+		<main class="b-test"></main>
+	</div>
+	<footer class="b-footer">
+		<div class="b-footer__credits">
+			<div class="b-crafted">Crafted by <a href="http://vk.com/iniel">Svetlana Kolosova</a></div>
+			<div class="b-follow">More games are coming up, follow us to get notifed</div>
+		</div>
+		<div class="b-footer__social">
+			<script>
+				document.write(
+					'<iframe src="http://www.facebook.com/plugins/like.php?href='+
+					encodeURIComponent('http://funwithfonts.com/')+
+					'&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>'
+				);
+			</script>
+			<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+			</script>
+			<a href="https://twitter.com/iniel_todd" class="twitter-follow-button" data-show-count="false">Follow @iniel_todd</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+			</script>
+		</div>
+	</footer>
+</body>
+</html>

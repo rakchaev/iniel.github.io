@@ -1,0 +1,474 @@
+@import "compass/reset";
+@import "_media-queries";
+@import "compass/layout";
+@import "fonts/*.png";
+@import "compass/css3/opacity";
+@import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
+@import "compass/utilities/general/clearfix";
+@import "compass/typography/vertical_rhythm";
+
+$small: 970px;
+$large: 1100px;
+$footer: 80px;
+$text: #fff;
+$light_text: #75757d;
+$blue: #00ccff;
+$pink: #fe57a1;
+$link: #cccccc;
+$bg: #3a3a45;
+$sub_bg: #4c4c56;
+$border_color: #4d4d56;
+$base_font_size: 62.5%;
+$sub_font: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+
+@mixin respond-to($media) {
+    @if $media == handhelds {
+        @media only screen and (max-width: $small) { @content; }
+    }
+    @else if $media == medium-screens {
+        @media only screen and (min-width: $small + 1) and (max-width: $large - 1) { @content; }
+    }
+    @else if $media == wide-screens {
+        @media only screen and (min-width: $large) { @content; }
+    }
+}
+
+@mixin screen() {
+    @include iphone4(portrait) { @content; }
+    @include iphone5(portrait) { @content; }
+    @include ipad(portrait) { @content; }
+}
+
+/* Main */
+
+html {
+    overflow: hidden;
+    font-size: $base_font_size;
+}
+
+.b-page {
+    overflow-x: hidden;
+    background: $bg;
+    color: $text;
+    font: 1em/150% Georgia, Times, serif;
+}
+
+a { color: $link; }
+
+::selection {
+    background: $pink;
+    color: $text;
+}
+
+.b-page__wrapper {
+    @include respond-to(wide-screens) { width: 83%; }
+    @include screen { margin-bottom: -150px; }
+    position: relative;
+    margin: 0 auto;
+    width: 91%;
+}
+
+.b-header {
+    position: relative;
+    height: 50px;
+}
+
+.b-header__counter, .b-header__game-title {
+    @include screen { zoom: 2; }
+    float: left;
+    padding-top: 23px;
+    width: 250px;
+    font-size: 1.8em;
+}
+
+.b-header__game-title_blue, .b-header__counter_blue { color: $blue; }
+
+.b-test {
+    @include screen { zoom: 1.6; }
+    @include iphone5 { zoom: 2; }
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: auto;
+    height: 60%;
+}
+
+.b-task {
+    margin-bottom: -15px;
+    font-size: 1.4em;
+    font-family: $sub_font;
+}
+
+.b-button {
+    display: inline-block;
+    float: right;
+    margin-bottom: 90px;
+    width: 130px;
+    height: 50px;
+    border: solid $border_color 1px;
+    color: $light_text;
+    text-align: center;
+    font-size: 2.9em;
+    line-height: 50px;
+    cursor: pointer;
+    &:hover { color: $text; }
+}
+
+.b-score {
+    @include respond-to(handhelds) { margin-bottom: 100px; }
+    float: left;
+    margin-top: 40px;
+    height: 80px;
+    font-size: 1.8em;
+}
+
+/* Start page */
+
+.b-task_intro {
+    @extend .b-task;
+    @include opacity(0.0);
+}
+
+.b-typeface_intro {
+    position: relative;
+    width: 100%;
+    img {
+        @include screen {
+            position: relative;
+            margin-left: 0px;
+        }
+        margin-left: -2px;
+        width: 100%;
+    }
+    .b-line_horizontal_higher { top: 24%; }
+    .b-line_horizontal_top { top: 40%; }
+    .b-line_horizontal_buttom { top: 68%; }
+    .b-line_vertical_one{ left: 0.5%; }
+    .b-line_vertical_two { left: 31%; }
+    .b-line_vertical_three { left: 67.5%; }
+    .b-line_vertical_four { left: 99.5%; }
+}
+
+.b-instructions {
+    @include screen { width: 60%; }
+    @include respond-to(handhelds) { width: 60%; }
+    margin-top: 20px;
+    color: $link;
+    font-family: $sub_font;
+}
+
+.b-instructions__title {
+    @include screen { font-size: 1.6em; }
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+.b-instructions__text {
+    @include ipad {
+        font-size: 1.4em;
+        line-height: 120%;
+    }
+    @include iphone5 {
+        font-size: 2.4em;
+        line-height: 80%;
+    }
+    font-size: 1.3em;
+}
+
+/* Question page */
+
+.b-typeface {
+    position: relative;
+    img {
+        @include screen {
+            position: relative;
+            margin-left: 0px;
+        }
+        margin-left: -2px;
+        width: 450px;
+    }
+}
+
+.b-options__item {
+    margin-top: 11px;
+    padding-top: 4px;
+    padding-left: 18px;
+    width: 225px;
+    height: 27px;
+    border: solid $border_color 1px;
+    color: $link;
+    font-size: 1.4em;
+    font-family: $sub_font;
+    line-height: 26px;
+    cursor: pointer;
+    &:hover { color: $text; }
+}
+
+/* Answer page */
+
+.b-type-compare {
+    @include clearfix;
+    overflow: visible;
+}
+
+.b-type-compare__answer {
+    @include respond-to(handhelds) { float: none; }
+    @include screen { float: none; }
+    @include iphone5(landscape) { float: none; }
+    float: left;
+    width: 50%;
+    height: 344px;
+}
+
+.b-type-compare__answer_wrong {
+    @include respond-to(handhelds) { float: none; }
+    @include screen { float: none; }
+    @include iphone5(landscape) { float: none; }
+    float: left;
+    width: 50%;
+    height: 344px;
+}
+
+.b-typeface_wrong {
+    @extend .b-typeface;
+    @include opacity(0.5);
+}
+
+.b-typeface__info {
+    margin-top: 20px;
+    font-size: 1.3em;
+    font-family: $sub_font;
+    line-height: 150%;
+    td { padding: 5px 20px 5px 0; }
+    a:hover {
+        background: $blue;
+        color: $bg;
+    }
+    &:nth-child(even) {
+        td {
+            vertical-align: top;
+        }
+    }
+}
+
+/* Final page */
+
+.b-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 5000;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(58, 58, 69, 0.8);
+}
+
+.b-final {
+    @include screen { zoom: 1.8; }
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 6000;
+    display: none;
+    margin: auto;
+    padding: 20px;
+    width: 280px;
+    height: 500px;
+    background: $sub_bg;
+    color: #999;
+    font-size: 1.8em;
+}
+
+.b-final__score {
+    margin-bottom: 20px;
+    color: $text;
+    text-align: center;
+    font-size: 13em;
+    line-height: 260px;
+}
+
+.b-final__out-of {
+    margin-bottom: 10px;
+    padding: 20px 0;
+    border-top: solid #999 3px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.b-tweet-button {
+    @include box-shadow(0 1px 0 rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1));
+    @include border-radius (3px);
+    margin-bottom: 5px;
+    padding: 16px 0;
+    border: solid $bg 1px;
+    background: transparent url(../images/tweet.png) 5px 50% no-repeat;
+    color: white;
+    text-decoration: none;
+    text-indent: 60px;
+    cursor: pointer;
+    &:hover { box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px, $blue 0px 0px 5px 0px, rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset; }
+}
+
+.b-retry-button {
+    color: $link;
+    text-align: right;
+    text-decoration: underline;
+    font: 0.8em/140% $sub_font;
+    cursor: pointer;
+}
+
+.b-final__thanks {
+    @include screen {
+        font-size: 0.8em;
+        line-height: 125%;
+    }
+    margin-top: 7px;
+    font-size: 0.6em;
+    font-family: $sub_font;
+}
+
+/* Hotkeys */
+
+%key {
+    position: absolute;
+    padding: 0 10px;
+    height: 80px;
+    background: $sub_bg;
+    font-size: 1.3em;
+    font-family: $sub_font;
+}
+
+.b-header__hotkeys-button {
+    @extend %key;
+    @include respond-to(handhelds) { display: none; }
+    @include screen { display: none; }
+    right: 0;
+    padding-top: 10px;
+    width: 120px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.b-hotkeys {
+    @extend %key;
+    @include respond-to(wide-screens) { margin-left: -27%; }
+    right: 22%;
+    z-index: 2000;
+    display: none;
+    padding: 10px 15px;
+    padding-right: 0;
+    width: 237px;
+    color: $link;
+}
+
+.b-hotkeys__item {
+    position: relative;
+    display: inline-block;
+    margin-right: 14px;
+    padding: 5px 0;
+    &:first-child {
+        display: block;
+    }
+}
+
+.b-hotkeys__item__icon {
+    margin: 0 3px;
+    padding: 0 5px;
+    border: solid #666 1px;
+    color: $text;
+    font-weight: bold;
+    font-size: 0.9em;
+    font-family: Arial, sans-serif;
+}
+
+/* Grids */
+
+%line {
+    position: absolute;
+    top: 0px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.b-line_horizontal,.b-line_horizontal_higher, .b-line_horizontal_top, .b-line_horizontal_buttom {
+    @extend %line;
+    margin-left: -1000px;
+    width: 10000px;
+    height: 1px;
+}
+
+.b-line_vertical, .b-line_vertical_one, .b-line_vertical_two, .b-line_vertical_three, .b-line_vertical_four {
+    @extend %line;
+    top: 0px;
+    float: left;
+    width: 1px;
+    height: 94%;
+}
+
+.b-typeface_wrong__push {
+    @include screen { margin-top: -164px; }
+    position: absolute;
+    margin-top: -167px;
+    height: 100%;
+}
+
+.b-line_horizontal_hide {
+    @include opacity(0.0);
+    @include respond-to(handhelds) { @include opacity(1.0); }
+    @include screen { @include opacity(1.0); }
+    @include iphone5(landscape) { @include opacity(1.0); }
+}
+
+/* footer */
+
+@include sticky-footer($footer, ".b-page__wrapper", ".b-footer");
+
+.b-footer {
+    @include respond-to(wide-screens) {
+        margin-left: -41.3%; 
+        width: 83%; 
+    }
+    @include screen {
+        height: 150px;
+        zoom: 2;
+    }
+    position: fixed;
+    left:50%;
+    margin-left: -45.3%;
+    width: 91%;
+    height: $footer;
+    background: rgba(58, 58, 69, 0.8);
+    color: $light_text;
+    font-size: 1.1em;
+    font-family: $sub_font;
+}
+
+.b-footer__credits {
+    padding: 10px 0;
+    height: $footer/2 - 20px;
+}
+
+.b-footer__social {
+    @include opacity(0.7);
+    @include screen { display: none; }
+    @include respond-to(handhelds) { display: none; }
+}
+
+.b-crafted, .twitter-share-button {
+    @include screen {
+        float: none;
+        height: 14px;
+    }
+    @include respond-to(handhelds) { float: none; }
+    float: left;
+}
+
+.b-follow, .twitter-follow-button {
+    @include screen { float: none; }
+    @include respond-to(handhelds) { float: none; }
+    float: right;
+    width: 265px;
+    letter-spacing: -0.3px;
+}
